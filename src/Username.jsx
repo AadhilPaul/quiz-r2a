@@ -26,7 +26,7 @@ function Username({ setUsername }) {
   }, []);
 
   const handleNext = () => {
-    localStorage.setItem("quizUsername", nameInput);
+    localStorage.setItem("quizUsername", `${nameInput} ${classInput} ${batchInput}`);
     setUsername(`${nameInput} ${classInput} ${batchInput}`);
   };
 
