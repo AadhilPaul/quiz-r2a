@@ -14,10 +14,10 @@ function Quiz({ username }) {
   useEffect(() => {
     async function loadQuestions() {
       const data = await fetchQuestions();
-      console.log("Feteched questions: ", data)
+      console.log("Feteched questions: ", data);
       setQuestions(data);
 
-      const isCompleted = localStorage.getItem('quizCompleted')
+      const isCompleted = localStorage.getItem("quizCompleted");
       if (isCompleted === "true") {
         setQuizCompleted(true);
         return;
@@ -50,9 +50,10 @@ function Quiz({ username }) {
 
       // Save progress in local storage
       localStorage.setItem(`lastQuestion_${username}`, nextIndex);
+      localStorage.setItem(`quizCompleted`, "false");
     } else {
       localStorage.setItem(`quizCompleted`, "true"); // Mark quiz as completed
-      // navigate("/quiz_completed");
+      navigate("/quiz_completed");
       alert("🎉 Quiz completed!");
       localStorage.removeItem(`lastQuestion_${username}`); // Clear progress after finishing
     }
@@ -62,21 +63,21 @@ function Quiz({ username }) {
 
   const currentQuestion = questions[currentQuestionIndex];
 
-  const CustomButton = styled(Button)({
-    backgroundColor: "#ecf3f9",
-    fontFamily: "'Oswald', 'sans-serif'",
-    padding: "15px 30px",
-    fontSize: "16px",
-    borderRadius: "50px",
-    color: "#101720",
-    fontWeight: "bold",
-    "&:hover": {
-      backgroundColor: "#A5C8E2",
-    },
-  });
+  const primaryColor = "#0f9e99";
+  const secondaryColor = "#efe9e0";
+  const fontColor = "black";
+  const backgroundColor = "#f9f9f9";
 
   return (
-    <Container>
+    <Container
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        minHeight: "100vh",
+        backgroundColor,
+      }}
+    >
       <Card
         raised
         sx={{
@@ -86,33 +87,64 @@ function Quiz({ username }) {
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
+          alignItems: "center",
+          borderRadius: "12px",
+          backgroundColor: secondaryColor,
+          color: fontColor,
+          boxShadow: `0px 4px 10px rgba(0, 0, 0, 0.1)`,
         }}
       >
-        <Typography variant="h5">Level{currentQuestion.level}</Typography>
+        {/* Question Level */}
         <Typography
           variant="h5"
-          sx={{ paddingBottom: "1.5rem", fontFamily: "'Oswald', sans-serif" }}
+          sx={{ color: primaryColor, fontWeight: "bold" }}
+        >
+          Level {currentQuestion.level}
+        </Typography>
+
+        {/* Question Text */}
+        <Typography
+          variant="h5"
+          sx={{
+            paddingBottom: "1.5rem",
+            textAlign: "center",
+            fontWeight: "bold",
+          }}
         >
           Q{currentQuestion.id}. {currentQuestion.question}
         </Typography>
+
+        {/* Options */}
         <Box
           sx={{
             display: "flex",
-            flexWrap: "wrap",
             flexDirection: "column",
-            gap: "10px",
+            gap: "12px",
+            width: "100%",
           }}
         >
           {Object.entries(currentQuestion.options).map(([key, value]) => (
-            <CustomButton
-              variant="text"
-              size="small"
+            <Button
+              variant="contained"
+              size="large"
               key={key}
               onClick={() => handleAnswerClick(key)}
               disabled={selectedAnswer !== null}
+              sx={{
+                backgroundColor: secondaryColor,
+                borderColor: primaryColor,
+                color: fontColor,
+                textTransform: "none",
+                fontSize: "1.1rem",
+                fontWeight: "bold",
+                padding: "10px",
+                "&:hover": {
+                  backgroundColor: "#0a7c79", // Slightly darker for hover effect
+                },
+              }}
             >
               {key}: {value}
-            </CustomButton>
+            </Button>
           ))}
         </Box>
       </Card>

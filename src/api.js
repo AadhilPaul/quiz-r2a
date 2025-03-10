@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:3000/api"; // Backend URL
+const API_URL = "http://localhost:3000/api";
 
 // Fetch quiz questions
 export const fetchQuestions = async () => {
@@ -13,7 +13,7 @@ export const fetchQuestions = async () => {
   }
 };
 
-// Submit quiz response (removed isCorrect)
+// Submit quiz response
 export const submitResponse = async (username, qId, selectedAnswer) => {
   try {
     await axios.post(`${API_URL}/submit`, {
