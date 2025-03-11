@@ -12,7 +12,7 @@ function QuizCompleted() {
     const storedUsername = localStorage.getItem("quizUsername");
 
     if (storedUsername) {
-      fetch(`http://localhost:3000/api/get-final-score/${storedUsername}`)
+      fetch(`https://backend-mocha-eta.vercel.app/api/get-final-score/${storedUsername}`)
         .then((res) => res.json())
         .then((data) => {
           console.log(data);

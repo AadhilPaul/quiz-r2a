@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:3000/api";
+const API_URL = "https://backend-mocha-eta.vercel.app/api";
 
 // Fetch quiz questions
 export const fetchQuestions = async () => {
