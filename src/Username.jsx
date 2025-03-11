@@ -141,7 +141,7 @@ function Username({ setUsername }) {
           >
             <TextField
               variant="outlined"
-              label="Class"
+              label="Department"
               value={classInput}
               onChange={(e) => setClassInput(e.target.value)}
               fullWidth

@@ -40,8 +40,6 @@ function Quiz({ username }) {
 
     await submitResponse(username, currentQuestion.id, option, isCorrect);
 
-    alert(isCorrect ? "✅ Correct!" : "❌ Wrong!");
-
     // Move to the next question
     if (currentQuestionIndex < questions.length - 1) {
       const nextIndex = currentQuestionIndex + 1;
@@ -54,7 +52,6 @@ function Quiz({ username }) {
     } else {
       localStorage.setItem(`quizCompleted`, "true"); // Mark quiz as completed
       navigate("/quiz_completed");
-      alert("🎉 Quiz completed!");
       localStorage.removeItem(`lastQuestion_${username}`); // Clear progress after finishing
     }
   };
@@ -109,9 +106,33 @@ function Quiz({ username }) {
             paddingBottom: "1.5rem",
             textAlign: "center",
             fontWeight: "bold",
+            fontSize: { xs: "1rem", sm: "1.5rem", md: "1.5rem" }, // Responsive font size
+            whiteSpace: "pre-wrap", // Ensures new lines are respected
           }}
         >
-          Q{currentQuestion.id}. {currentQuestion.question}
+          Q{currentQuestion.id}.
+          {currentQuestion.isCode === "Yes" ? ( // Check if the question contains code
+            <div>
+              {currentQuestion.question}
+              <Box
+                component="pre"
+                sx={{
+                  backgroundColor: "#272822", // Dark background like a code editor
+                  color: "#f8f8f2", // Light text for contrast
+                  padding: "10px",
+                  borderRadius: "5px",
+                  textAlign: "start",
+                  fontSize: "1rem",
+                  overflowX: "auto", // Allow horizontal scrolling for long code
+                  fontFamily: "monospace",
+                }}
+              >
+                <code>{currentQuestion.code}</code>
+              </Box>
+            </div>
+          ) : (
+            currentQuestion.question
+          )}
         </Typography>
 
         {/* Options */}
@@ -129,17 +150,19 @@ function Quiz({ username }) {
               size="large"
               key={key}
               onClick={() => handleAnswerClick(key)}
-              disabled={selectedAnswer !== null}
               sx={{
-                backgroundColor: secondaryColor,
+                backgroundColor:
+                  selectedAnswer === key ? "#0a7c79" : secondaryColor, // Reset hover color after selecting
                 borderColor: primaryColor,
                 color: fontColor,
                 textTransform: "none",
-                fontSize: "1.1rem",
+                fontSize: { xs: "0.8rem", sm: "1.5rem", md: "1.5rem" },
                 fontWeight: "bold",
                 padding: "10px",
+                transition: "background-color 0.3s",
                 "&:hover": {
-                  backgroundColor: "#0a7c79", // Slightly darker for hover effect
+                  backgroundColor:
+                    selectedAnswer === null ? "#0a7c79" : secondaryColor, // Apply hover only if not selected
                 },
               }}
             >

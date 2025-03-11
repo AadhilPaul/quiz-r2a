@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
 import { Box, Card, Typography } from "@mui/material";
+import { useNavigate } from "react-router";
 
 function QuizCompleted() {
   const [userData, setUserData] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
+    const quizCompleted = localStorage.getItem("quizCompleted");
+    if (quizCompleted === "false" || !quizCompleted) navigate("/")
     const storedUsername = localStorage.getItem("quizUsername");
 
     if (storedUsername) {
