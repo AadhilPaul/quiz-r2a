@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { fetchQuestions, submitResponse } from "./api"; // Your API functions
-import { styled } from "@mui/material/styles";
-import { Container, Card, Typography, Box, Button } from "@mui/material";
+import { CircularProgress, Container, Card, Typography, Box, Button } from "@mui/material";
 import { useNavigate } from "react-router";
 
 function Quiz({ username }) {
@@ -56,7 +55,22 @@ function Quiz({ username }) {
     }
   };
 
-  if (!questions.length) return <p>Loading questions...</p>;
+  if (!questions.length) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "90vh"
+        }}
+      >
+        <CircularProgress color="info" />
+        <p>Loading questions...</p>
+      </Box>
+    );
+  }
 
   const currentQuestion = questions[currentQuestionIndex];
 
