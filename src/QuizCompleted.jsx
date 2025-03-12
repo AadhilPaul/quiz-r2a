@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Box, Card, Typography } from "@mui/material";
+import { CircularProgress, Box, Card, Typography } from "@mui/material";
 import { useNavigate } from "react-router";
 
 function QuizCompleted() {
@@ -48,7 +48,7 @@ function QuizCompleted() {
             <Typography variant="h3">{userData.score}</Typography>
           </>
         ) : (
-          <Typography variant="h6">Loading...</Typography>
+          <CircularProgress sx={{margin: "5px"}} color="info" />
         )}
         <Typography variant="body1" sx={{ mt: 2 }}>
           Thank you for participating.
