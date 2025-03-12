@@ -160,7 +160,7 @@ function Quiz({ username }) {
                 fontWeight: "bold",
                 padding: "10px",
                 transition: "background-color 0.3s",
-                "&:hover": {
+                "&:active": {
                   backgroundColor:
                     selectedAnswer === null ? "#0a7c79" : secondaryColor, // Apply hover only if not selected
                 },
